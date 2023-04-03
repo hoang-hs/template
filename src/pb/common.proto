@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package main;
+
+option go_package = ".;pb";
+
+//ver 1
+
+enum EInvoicePartner {
+  MISA = 0;
+  VIETTEL = 1;
+  VNPT = 2;
+}
+
+enum KVSoftware {
+  RETAIL = 0;
+  FNB = 1;
+  BOOKING = 2;
+}
+
+message Merchant {
+  int64 merchant_id = 1;
+  KVSoftware merchant_code = 2;
+}
+
+message Page {
+  int32 Page = 1;
+  int32 Limit = 2;
+}
