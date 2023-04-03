@@ -2,7 +2,6 @@ package log
 
 import (
 	"base/src/common"
-	"base/src/common/helpers"
 	"context"
 	"fmt"
 )
@@ -30,9 +29,9 @@ func Fatal(msg string, args ...interface{}) {
 }
 
 func IErr(ctx context.Context, err *common.Error) {
-	if helpers.IsInternalError(err) {
+	if common.IsInternalError(err) {
 		globalLogger.Error(addCtxValue(ctx, err.GetDetail()))
-	} else if helpers.IsClientError(err) {
+	} else if common.IsClientError(err) {
 		globalLogger.Warn(addCtxValue(ctx, err.ToJSon()))
 	}
 
@@ -43,6 +42,6 @@ func GetLogger() *logger {
 }
 
 func addCtxValue(ctx context.Context, msg string) string {
-	traceId := helpers.GetTraceId(ctx)
+	traceId := common.GetTraceId(ctx)
 	return fmt.Sprintf("%s, trace_id:[%s]", msg, traceId)
 }
