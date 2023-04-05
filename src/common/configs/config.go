@@ -14,6 +14,9 @@ type Config struct {
 			Address string `mapstructure:"address"`
 			Prefix  string `mapstructure:"prefix"`
 		} `mapstructure:"httpui"`
+		Grpc struct {
+			Address string `mapstructure:"address"`
+		} `mapstructure:"grpc"`
 	} `mapstructure:"server"`
 
 	Kafka struct {

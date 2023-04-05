@@ -1,4 +1,4 @@
-package grpcui
+package handlers
 
 import (
 	"base/src/common"
