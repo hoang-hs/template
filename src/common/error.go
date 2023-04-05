@@ -8,13 +8,13 @@ import (
 	"time"
 )
 
-type CodeResponse int
+type ErrorCode int
 
 const (
 	//internal
-	ErrorCodeBadRequest   CodeResponse = 400
-	ErrorCodeUnauthorized CodeResponse = 401
-	ErrorCodeSystemError  CodeResponse = 500
+	ErrorCodeBadRequest   ErrorCode = 400
+	ErrorCodeUnauthorized ErrorCode = 401
+	ErrorCodeSystemError  ErrorCode = 500
 )
 
 type Source string
@@ -24,12 +24,12 @@ const (
 )
 
 type Error struct {
-	Code       CodeResponse `json:"code"`
-	Message    string       `json:"message"`
-	TraceID    string       `json:"trace_id,omitempty"`
-	Detail     string       `json:"detail"`
-	Source     Source       `json:"source"`
-	HTTPStatus int          `json:"http_status"`
+	Code       ErrorCode `json:"code"`
+	Message    string    `json:"message"`
+	TraceID    string    `json:"trace_id,omitempty"`
+	Detail     string    `json:"detail"`
+	Source     Source    `json:"source"`
+	HTTPStatus int       `json:"http_status"`
 }
 
 func (e *Error) Error() string {
@@ -40,7 +40,7 @@ func (e *Error) GetHttpStatus() int {
 	return e.HTTPStatus
 }
 
-func (e *Error) GetCode() CodeResponse {
+func (e *Error) GetCode() ErrorCode {
 	return e.Code
 }
 

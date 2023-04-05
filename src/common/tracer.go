@@ -7,6 +7,7 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/jaeger"
+	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
@@ -42,6 +43,7 @@ func InitTracer(lc fx.Lifecycle, logger *zap.SugaredLogger) {
 	}
 	tp := sdktrace.NewTracerProvider(opts...)
 	otel.SetTracerProvider(tp)
+	otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}))
 	lc.Append(fx.Hook{
 		OnStop: func(ctx context.Context) error {
 			logger.Info("trace provider shutdown")

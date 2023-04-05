@@ -2,9 +2,7 @@ package services
 
 import (
 	"base/src/common"
-	"base/src/common/helpers"
 	"base/src/common/log"
-	"base/src/core/constant"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -12,7 +10,6 @@ import (
 	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 )
 
@@ -36,13 +33,6 @@ func (b *baseService) connectGrpc(domain string) *grpc.ClientConn {
 		log.GetLogger().GetZap().Fatalf("connect grpc error, domain:[%s], err:[%s]", domain, err.Error())
 	}
 	return conn
-}
-
-// Todo remove when add trace grpc
-// Get trace id from span context
-func (b *baseService) addTraceId(ctx context.Context) context.Context {
-	ctxMetaData := metadata.AppendToOutgoingContext(ctx, []string{constant.TraceIdName, helpers.GetTraceId(ctx)}...)
-	return ctxMetaData
 }
 
 func (b *baseService) grpToIError(ctx context.Context, inputErr error) *common.Error {
