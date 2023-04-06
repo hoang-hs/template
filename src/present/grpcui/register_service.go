@@ -14,7 +14,7 @@ type GrpcServerIn struct {
 	Server *grpc.Server
 }
 
-func NewGRPCServer() (*grpc.Server, error) {
+func NewGRPCServer() *grpc.Server {
 	server := grpc.NewServer(
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			middlewares.TrackingInterceptor(),
@@ -23,7 +23,7 @@ func NewGRPCServer() (*grpc.Server, error) {
 			grpc_recovery.UnaryServerInterceptor(), // recover from gRPC handler panics into a gRPC error with `code.Internal`
 		)),
 	)
-	return server, nil
+	return server
 }
 
 func registerGRPCServices(in GrpcServerIn) {
