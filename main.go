@@ -1,6 +1,7 @@
 package main
 
 import (
+	"base/src/bootstrap"
 	"base/src/common"
 	"base/src/common/configs"
 	"base/src/common/log"
@@ -40,6 +41,20 @@ func main() {
 
 	app := fx.New(
 		fx.Invoke(common.InitTracer),
+		fx.Provide(log.GetLogger().GetZap),
+
+		//build service
+		bootstrap.BuildServiceModule(),
+
+		//build http server
+		bootstrap.BuildAuthModules(),
+		bootstrap.BuildControllerModule(),
+		bootstrap.BuildValidator(),
+		bootstrap.BuildHTTPServerModule(),
+
+		//build grpc server
+		bootstrap.BuildHandlersModules(),
+		bootstrap.BuildGrpcModules(),
 	)
 	startCtx, cancel := context.WithTimeout(context.Background(), defaultGracefulTimeout)
 	defer cancel()
