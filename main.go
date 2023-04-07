@@ -46,6 +46,9 @@ func main() {
 		//build service
 		bootstrap.BuildServiceModule(),
 
+		//build ext client service
+		bootstrap.BuildExtServicesModules(),
+
 		//build http server
 		bootstrap.BuildAuthModules(),
 		bootstrap.BuildControllerModule(),
