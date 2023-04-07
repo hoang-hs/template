@@ -58,6 +58,9 @@ func main() {
 		//build grpc server
 		bootstrap.BuildHandlersModules(),
 		bootstrap.BuildGrpcModules(),
+
+		//message queue
+		bootstrap.BuildMessageQueueModules(),
 	)
 	startCtx, cancel := context.WithTimeout(context.Background(), defaultGracefulTimeout)
 	defer cancel()
